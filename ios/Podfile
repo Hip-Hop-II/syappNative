@@ -25,5 +25,7 @@ target 'syappNative' do
 
   pod 'react-native-amap3d', path: '../node_modules/react-native-amap3d/lib/ios'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
 end
 

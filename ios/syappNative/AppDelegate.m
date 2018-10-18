@@ -9,6 +9,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <AMapFoundationKit/AMapFoundationKit.h>
 
 @implementation AppDelegate
 
@@ -29,6 +30,8 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [AMapServices sharedServices].apiKey = @"d30e1af08bfd0d807b07a7659463b108";
+  NSLog(@"%@========", [[NSBundle mainBundle] bundleIdentifier]);
   return YES;
 }
 

@@ -1,4 +1,4 @@
-import * as apiUrls from '../.API_URL'
+import * as apiUrls from '../API_URL'
 
 function checkStatus (response) {
   if (response.status >= 200 && response.status < 300) {

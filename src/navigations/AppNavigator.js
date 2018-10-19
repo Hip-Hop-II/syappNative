@@ -116,6 +116,6 @@ export default (App = createSwitchNavigator(
     Main: MainNavigator
   },
   {
-    initialRouteName: "Main"
+    initialRouteName: "Auth"
   }
 ));

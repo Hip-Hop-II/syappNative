@@ -16,7 +16,7 @@ export default class SigninScreen extends PureComponent {
     state = {
       loading: false,
       phoneNumber: '',
-      userCode: ''
+      code: ''
     }
   }
   render() {
@@ -45,7 +45,7 @@ export default class SigninScreen extends PureComponent {
                    clearTextOnFocus={true}
                    clearButtonMode="while-editing"
                    style={{flex: 1}}
-                   onChangeText={(input) => this.setState({userCode: input})}>
+                   onChangeText={(input) => this.setState({code: input})}>
 
         </TextInput>
         <Button style={styles.code} underlayColor='transparent'
@@ -92,10 +92,41 @@ export default class SigninScreen extends PureComponent {
   /**
    * 登录进入主页面
    */
-  loginInMainpage() {
+  async loginInMainpage() {
     this.refs.inputLoginName.blur()
     this.refs.inputLoginPwd.blur()
     // this.props.navigation.navigate()
+      try {
+          const {phoneNumber, code} = this.state
+          this.setState({
+              loading: true
+          })
+          const res = await User.phoneCode({
+              username: phoneNumber,																															//String	是	password
+              code: code,																													//String	是	验证码
+              version: '5.2.1'
+          })
+          this.setState({
+              loading: false
+          })
+          console.log(res)
+          //根据获取验证码返回的结果做判断
+          if (res.code === 0) {
+              alert('登陆成功!')
+              let loginInfo = {
+                  customerId: res.data.customerId,
+                  token: res.data.token,
+                  sso_phone: res.data.userName,
+                  sso_name: res.data.name,
+                  sso_isBussUsable: res.data.isBussUsable //机构支付是否可用,0是不能支付，1是可以支付
+              }
+              //保存登录相关的cookie信息   loginInfo
+          } else {
+              alert('网络繁忙，请稍后重试')
+          }
+      } catch (error) {
+          throw error
+      }
   }
 }
 

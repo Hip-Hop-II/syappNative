@@ -7,13 +7,15 @@ import {
 } from 'react-native'
 import Button from '../components/buttons/Button'
 import { colors } from '../utils/colors'
+import User from '../Api/index.js'
 
 
 export default class SigninScreen extends PureComponent {
   constructor(props) {
     super(props)
     state = {
-      userPhone: '',
+      loading: false,
+      phoneNumber: '',
       userCode: ''
     }
   }
@@ -32,7 +34,7 @@ export default class SigninScreen extends PureComponent {
                    clearTextOnFocus={false}
                    clearButtonMode="while-editing"
                    style={{flex: 1}}
-                   onChangeText={(input) => this.setState({userPhone: input})}>
+                   onChangeText={(input) => this.setState({phoneNumber: input})}>
 
         </TextInput>
       </View>
@@ -62,8 +64,30 @@ export default class SigninScreen extends PureComponent {
       </Text>
     </View>)
   }
-  getCode() {
-    alert('验证码是:1234' )
+  async getCode() {
+      try {
+          const {phoneNumber} = this.state
+          this.setState({
+              loading: true
+          })
+          const res = await User.phoneCode({
+              phoneNumber
+          })
+          this.setState({
+              loading: false
+          })
+          console.log(res)
+          //根据获取验证码返回的结果做判断
+          if (res.code === 0) {
+              alert('发送成功!')
+          } else if (res.code === 202) {
+              // 需要图形验证码情况
+          } else {
+             alert('网络繁忙，请稍后重试')
+          }
+      } catch (error) {
+          throw error
+      }
   }
   /**
    * 登录进入主页面

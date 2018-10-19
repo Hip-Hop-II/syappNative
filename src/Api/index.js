@@ -27,5 +27,18 @@ export const User = {
       .then(parseJSON)
       .then(data => data)
       .catch(err => Promise.reject(err))
+  },
+  phoneCode (data) {
+      return fetch(apiUrls.phone_code_url, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+              'Content-type': 'application/json'
+          }
+      })
+          .then(checkStatus)
+          .then(parseJSON)
+          .then(data => data)
+          .catch(err => Promise.reject(err))
   }
 }

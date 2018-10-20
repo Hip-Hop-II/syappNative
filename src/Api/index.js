@@ -1,4 +1,5 @@
 import * as apiUrls from '../API_URL'
+import queryString from 'query-string'
 
 function checkStatus (response) {
   if (response.status >= 200 && response.status < 300) {
@@ -29,11 +30,12 @@ export const User = {
       .catch(err => Promise.reject(err))
   },
   phoneCode (data) {
+    console.log(data)
       return fetch(apiUrls.phone_code_url, {
           method: 'POST',
-          body: JSON.stringify(data),
+          body: queryString.stringify(data),
           headers: {
-              'Content-type': 'application/json'
+              'Content-type': 'application/x-www-form-urlencoded'
           }
       })
           .then(checkStatus)

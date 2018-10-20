@@ -7,13 +7,13 @@ import {
 } from 'react-native'
 import Button from '../components/buttons/Button'
 import { colors } from '../utils/colors'
-import User from '../Api/index.js'
+import {User} from '../Api/index.js'
 
 
 export default class SigninScreen extends PureComponent {
   constructor(props) {
     super(props)
-    state = {
+    this.state = {
       loading: false,
       phoneNumber: '',
       code: ''
@@ -34,6 +34,7 @@ export default class SigninScreen extends PureComponent {
                    clearTextOnFocus={false}
                    clearButtonMode="while-editing"
                    style={{flex: 1}}
+                   value={this.state.phoneNumber}
                    onChangeText={(input) => this.setState({phoneNumber: input})}>
 
         </TextInput>
@@ -64,9 +65,10 @@ export default class SigninScreen extends PureComponent {
       </Text>
     </View>)
   }
-  async getCode() {
+  getCode = async () => {
       try {
           const {phoneNumber} = this.state
+          debugger
           this.setState({
               loading: true
           })

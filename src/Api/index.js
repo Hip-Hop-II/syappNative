@@ -21,7 +21,10 @@ export const User = {
             method: 'POST',
             body: queryString.stringify(data),
             headers: {
-                'Content-type': 'application/x-www-form-urlencoded'
+                'Content-type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json',
+                mode: 'cors',
+			    cache: 'force-cache'
             }
         })
             .then(checkStatus)
@@ -45,7 +48,7 @@ export const User = {
     },
     codeImg(data) {
         console.log(data)
-        return fetch(apiUrls.image_code_url, {
+        return fetch(`${apiUrls.image_code_url}?uid=${data.uid}`, {
             method: 'GET',
             // body: queryString.stringify(data),
             headers: {

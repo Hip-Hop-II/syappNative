@@ -13,6 +13,9 @@ import {colors} from '../utils/colors'
 import {User} from '../Api/index.js'
 
 export default class SigninScreen extends PureComponent {
+    static navigationOptions = {
+      header: null
+    }
     constructor(props) {
         super(props)
         this.state = {
@@ -64,18 +67,18 @@ export default class SigninScreen extends PureComponent {
                     onPress={() => this.loginInMainpage()}>
                 <Text style={styles.loginText}>登录</Text>
             </Button>
-            <Text style={styles.tip}>
-                点击登录即表示同意
+            <View style={styles.tip}>
+                <Text>点击登录即表示同意</Text>
                 <Text style={styles.clause}>《用户条款》</Text>
-            </Text>
+            </View>
             <PopUp ref={ref => this.popUp = ref}>
                 <View style={styles.item}>
                     <Image style={styles.img}
                            onPress={() => this.getImgData()}
                            source={{uri: this.state.imgData}}
-                           resizeMode="contain"/>
+                        resizeMode="contain" />
                     <TextInput ref="loginVailImgCode"
-                               underlineColorAndroid="gray"
+                               underlineColorAndroid="transparent"
                                placeholder="请输入图形验证码"
                                clearTextOnFocus={true}
                                clearButtonMode="while-editing"
@@ -83,11 +86,10 @@ export default class SigninScreen extends PureComponent {
                                onChangeText={(input) => this.setState({loginVailImgCode: input})}>
 
                     </TextInput>
-                    <TouchableOpacity onPress={() => this.verifyImageCode()}>
-                        <Button style={styles.code} underlayColor='transparent'>
-                            <Text style={styles.loginText}>确认</Text>
-                        </Button>
-                    </TouchableOpacity>
+                    <Button onPress={() => this.verifyImageCode()}
+                    style={styles.code} underlayColor='transparent'>
+                        <Text style={styles.loginText}>确认</Text>
+                    </Button>
                 </View>
             </PopUp>
         </View>)
@@ -96,7 +98,6 @@ export default class SigninScreen extends PureComponent {
     verifyImageCode = async () => {
         try {
             const {phoneNumber, loginVailImgCode} = this.state
-            // debugger
             this.setState({
                 loading: true
             })
@@ -211,6 +212,7 @@ export default class SigninScreen extends PureComponent {
                     sso_name: res.data.name,
                     sso_isBussUsable: res.data.isBussUsable //机构支付是否可用,0是不能支付，1是可以支付
                 }
+                this.props.navigation.navigate('Main')
                 //保存登录相关的cookie信息   loginInfo
             } else {
                 alert('网络繁忙，请稍后重试')
@@ -263,7 +265,7 @@ const styles = StyleSheet.create({
     loginText: {
         fontSize: 20,
         alignSelf: 'center',
-        color: colors.WHITE
+        color: colors.green2
     },
     tip: {
         fontSize: 18,
@@ -274,5 +276,8 @@ const styles = StyleSheet.create({
     clause: {
         color: colors.WARNING
     },
-    img: {}
+    img: {
+      width: 82,
+      height: 32
+    }
 })

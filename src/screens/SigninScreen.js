@@ -17,7 +17,7 @@ export default class SigninScreen extends PureComponent {
         super(props)
         this.state = {
             loading: false,
-            phoneNumber: '15911122312',
+            phoneNumber: '15807230740',
             code: '',
             imgData: '',
             loginVailImgCode: ''
@@ -195,7 +195,10 @@ export default class SigninScreen extends PureComponent {
             const res = await User.phoneCode({
                 username: phoneNumber,																															//String	是	password
                 code: code,																													//String	是	验证码
-                version: '5.2.1'
+                version: '5.2.1',
+                loginPointLo: '116.316862',
+                loginPointLa: '39.904777',
+                cityId: 44,
             })
             this.setState({
                 loading: false

@@ -58,3 +58,4 @@ buck-out/
 ios/Pods/
 ios/syappNative/AppDelegate.m
 src/.API_URL.js
+src/API_URL.js

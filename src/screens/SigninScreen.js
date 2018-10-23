@@ -5,6 +5,7 @@ import {
     View,
     TextInput,
     TouchableOpacity,
+    AsyncStorage,
     Image
 } from 'react-native'
 import Button from '../components/buttons/Button'
@@ -31,7 +32,7 @@ export default class SigninScreen extends PureComponent {
         return (<View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>验证码登录</Text>
-                <Text style={styles.subTitle}>欢迎登录首汽约车</Text>
+                <Text style={styles.subTitle}>欢迎登录XX约车</Text>
             </View>
             <View style={styles.item}>
                 <Text style={styles.textStyle}>+86 > </Text>
@@ -193,13 +194,13 @@ export default class SigninScreen extends PureComponent {
             this.setState({
                 loading: true
             })
-            const res = await User.phoneCode({
-                username: phoneNumber,																															//String	是	password
-                code: code,																													//String	是	验证码
-                version: '5.2.1',
+            const res = await User.login({
+                username: phoneNumber,
+                code: code,
+                cityId: 44,
                 loginPointLo: '116.316862',
                 loginPointLa: '39.904777',
-                cityId: 44,
+                version: '5.2.1'
             })
             this.setState({
                 loading: false
@@ -215,6 +216,8 @@ export default class SigninScreen extends PureComponent {
                     sso_name: res.data.name,
                     sso_isBussUsable: res.data.isBussUsable //机构支付是否可用,0是不能支付，1是可以支付
                 }
+                // 本地存储 类似于 cookie 
+                await AsyncStorage.setItem('loginInfo', loginInfo)
                 this.props.navigation.navigate('Main')
                 //保存登录相关的cookie信息   loginInfo
             } else {

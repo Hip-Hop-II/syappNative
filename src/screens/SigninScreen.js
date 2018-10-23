@@ -193,7 +193,7 @@ export default class SigninScreen extends PureComponent {
             this.setState({
                 loading: true
             })
-            const res = await User.phoneCode({
+            const res = await User.login({
                 username: phoneNumber,
                 code: code,
                 cityId: 44,

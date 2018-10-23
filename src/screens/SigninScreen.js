@@ -31,7 +31,7 @@ export default class SigninScreen extends PureComponent {
         return (<View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>验证码登录</Text>
-                <Text style={styles.subTitle}>欢迎登录首汽约车</Text>
+                <Text style={styles.subTitle}>欢迎登录XX约车</Text>
             </View>
             <View style={styles.item}>
                 <Text style={styles.textStyle}>+86 > </Text>
@@ -194,8 +194,11 @@ export default class SigninScreen extends PureComponent {
                 loading: true
             })
             const res = await User.phoneCode({
-                username: phoneNumber,																															//String	是	password
-                code: code,																													//String	是	验证码
+                username: phoneNumber,
+                code: code,
+                cityId: 44,
+                loginPointLo: '116.316862',
+                loginPointLa: '39.904777',
                 version: '5.2.1'
             })
             this.setState({
